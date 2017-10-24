@@ -30,9 +30,10 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-        
         var options = { frequency: 500 };  // Update every 3 seconds
         var watchID = navigator.accelerometer.watchAcceleration(app.onSuccess, null, options);
+        document.addEventListener("offline", onOffline, false);
+        document.addEventListener("online", onOnline, false);
     },
 
     onSuccess: function (acceleration) {
@@ -41,5 +42,13 @@ var app = {
         $("#zPos").html((acceleration.z).toFixed(3));
     }
 };
+
+function onOffline() {
+    $('#app').load('views/networkError.html')
+}
+
+function onOnline(){
+    window.location.reload();
+}
 
 app.initialize();
