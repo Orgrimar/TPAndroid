@@ -34,6 +34,26 @@ var app = {
         var watchID = navigator.accelerometer.watchAcceleration(app.onSuccess, null, options);
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
+        window.plugins.speechRecognition.isRecognitionAvailable(function(available){
+            if(!available){
+                console.log("Desoler, ce n'est valide");
+            }
+            window.plugins.speechRecognition.hasPermission(function(isGranted){
+                if(isGranted){
+                    startRecognition();
+                }else{
+                    window.plugins.speechRecognition.requestPermission(function(){
+                        startRecognition();
+                    }, function(err){
+                        console.log(err);
+                    });
+                }
+            }, function(err){
+                console.log(err);
+            });
+        }, function(err){
+            console.log(err);
+        });
     },
 
     onSuccess: function (acceleration) {
@@ -49,6 +69,16 @@ function onOffline() {
 
 function onOnline(){
     window.location.reload();
+}
+
+function startRecognition(){
+    window.plugins.speechRecognition.startListening(function(result){
+        console.log(result);
+    }, function(err){
+        console.error(err);
+    }, {
+        language: "fr-FR"
+    });
 }
 
 app.initialize();
