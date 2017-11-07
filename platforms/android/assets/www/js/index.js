@@ -34,7 +34,6 @@ var app = {
         var options = {
             frequency: 500
         }; // Update every 3 seconds
-        //var watchID = navigator.accelerometer.watchAcceleration(app.onSuccess, null, options);
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
         console.log("Device Ready");
@@ -43,8 +42,6 @@ var app = {
             console.log(this);
             app.onBabbelStart(); //.bind(this)
         });
-
-        // $("#startCapture").click(this.onBabbelStart());
     },
 
     onBabbelStart: function () {
@@ -56,11 +53,15 @@ var app = {
             window.plugins.speechRecognition.hasPermission(function (isGranted) {
                 console.log("Test Granted");
                 if (isGranted) {
-                    console.log("TestValidé");
-                    startRecognition();
+                    console.log("Permission OK");
+                    console.log("Debut de la reconnaisance");
+                    app.startRecognition();
                 } else {
+                    console.log("Permission KO");
                     window.plugins.speechRecognition.requestPermission(function () {
-                        startRecognition();
+                        console.log("Permission OK");
+                        console.log("Debut de la reconnaisance");
+                        app.startRecognition();
                     }, function (err) {
                         console.log(err);
                     });
@@ -71,19 +72,20 @@ var app = {
         }, function (err) {
             console.log(err);
         });
+    },
+
+    startRecognition: function () {
+        console.log("Debut de l' écoute")
+        window.plugins.speechRecognition.startListening(function (result) {
+            console.log("SpeechReco = " + result);
+        }, function (err) {
+            console.log("Erreur Saisie");
+            console.error(err);
+        }, {
+            language: "fr-FR"
+            //$("#LangSelect").val()
+        });
     }
-
-    //    ,
-    //
-    //    onSuccess: function (acceleration) {
-    //        $("#xPos").html((acceleration.x).toFixed(3));
-    //        $("#yPos").html((acceleration.y).toFixed(3));
-    //        $("#zPos").html((acceleration.z).toFixed(3));
-    //    }
-}
-
-function startingRecognition() {
-
 }
 
 function onOffline() {
@@ -92,16 +94,5 @@ function onOffline() {
 
 function onOnline() {
     window.location.reload();
-}
-
-function startRecognition() {
-    window.plugins.speechRecognition.startListening(function (result) {
-        console.log(result);
-    }, function (err) {
-        console.error(err);
-    }, {
-        language: "fr-FR"
-        //$("#LangSelect").val()
-    });
 }
 app.initialize();
