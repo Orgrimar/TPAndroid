@@ -18,67 +18,90 @@
  */
 var app = {
     // Application Constructor
-    initialize: function() {
-        if (window.cordova)
-            document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        else
+    initialize: function () {
+        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        /*if (window.cordova) {
+        } else {
             this.onDeviceReady();
+        }*/
     },
 
     // deviceready Event Handler
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        var options = { frequency: 500 };  // Update every 3 seconds
-        var watchID = navigator.accelerometer.watchAcceleration(app.onSuccess, null, options);
+    onDeviceReady: function () {
+        var options = {
+            frequency: 500
+        }; // Update every 3 seconds
+        //var watchID = navigator.accelerometer.watchAcceleration(app.onSuccess, null, options);
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
-        window.plugins.speechRecognition.isRecognitionAvailable(function(available){
-            if(!available){
-                console.log("Desoler, ce n'est valide");
+        console.log("Device Ready");
+
+        $("#startCapture").on("click", function () {
+            console.log(this);
+            app.onBabbelStart(); //.bind(this)
+        });
+
+        // $("#startCapture").click(this.onBabbelStart());
+    },
+
+    onBabbelStart: function () {
+        console.log(this);
+        window.plugins.speechRecognition.isRecognitionAvailable(function (available) {
+            if (!available) {
+                console.log("Desolé, ce n'est valide");
             }
-            window.plugins.speechRecognition.hasPermission(function(isGranted){
-                if(isGranted){
+            window.plugins.speechRecognition.hasPermission(function (isGranted) {
+                console.log("Test Granted");
+                if (isGranted) {
+                    console.log("TestValidé");
                     startRecognition();
-                }else{
-                    window.plugins.speechRecognition.requestPermission(function(){
+                } else {
+                    window.plugins.speechRecognition.requestPermission(function () {
                         startRecognition();
-                    }, function(err){
+                    }, function (err) {
                         console.log(err);
                     });
                 }
-            }, function(err){
+            }, function (err) {
                 console.log(err);
             });
-        }, function(err){
+        }, function (err) {
             console.log(err);
         });
-    },
-
-    onSuccess: function (acceleration) {
-        $("#xPos").html((acceleration.x).toFixed(3));
-        $("#yPos").html((acceleration.y).toFixed(3));
-        $("#zPos").html((acceleration.z).toFixed(3));
     }
-};
+
+    //    ,
+    //
+    //    onSuccess: function (acceleration) {
+    //        $("#xPos").html((acceleration.x).toFixed(3));
+    //        $("#yPos").html((acceleration.y).toFixed(3));
+    //        $("#zPos").html((acceleration.z).toFixed(3));
+    //    }
+}
+
+function startingRecognition() {
+
+}
 
 function onOffline() {
     $('#app').load('views/networkError.html')
 }
 
-function onOnline(){
+function onOnline() {
     window.location.reload();
 }
 
-function startRecognition(){
-    window.plugins.speechRecognition.startListening(function(result){
+function startRecognition() {
+    window.plugins.speechRecognition.startListening(function (result) {
         console.log(result);
-    }, function(err){
+    }, function (err) {
         console.error(err);
     }, {
         language: "fr-FR"
+        //$("#LangSelect").val()
     });
 }
-
 app.initialize();
