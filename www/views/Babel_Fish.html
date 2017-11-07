@@ -1,19 +1,74 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-	    <meta name="format-detection" content="telephone=no">
-	    <meta name="msapplication-tap-highlight" content="no">
-	    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-	    <link rel="stylesheet" type="text/css" href="../css/Babel_Fish.css">
-		<title>Babel Fish</title>
-	</head>
-	<body>
-		<h1>Babel Fish</h1>
-		<script type="text/javascript" src="../js/lib/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="../js/lib/popper.min.js"></script>
-        <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../cordova.js"></script>
-        <script type="text/javascript" src="../js/index.js"></script>
-	</body>
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="../css/Babel_Fish.css">
+    <link rel="stylesheet" type="text/css" href="../ressources/mdbootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../ressources/mdbootstrap/css/mdb.min.css">
+    <link rel="stylesheet" type="text/css" href="../ressources/mdbootstrap/css/style.css">
+
+    <title>Babel Fish</title>
+</head>
+
+<body>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" role="info">Babel Fish</a>
+        </li>
+    </ul>
+    <form>
+<!--        <center>-->
+            <br>
+            <select class="custom-select">
+                <option value="" disabled selected>Select your destination language</option>
+               <option value="">Français</option>
+               <option value="">English</option>
+               <option value="">Deutsch</option>
+            </select>
+            <!--        <label>Select your destination language</label>-->
+
+            <!--        <div class="row" style="margin-left:1%;">-->
+            <br>
+        <div class="text-center">
+            <button type="button " class="btn btn-xl btn-primary" style="margin-top:2%">
+              <i class="fa fa-microphone prefix"></i>speech
+            </button>
+            </div>
+            <br>
+                                       
+              <div class="md-form ">
+                <textarea id="textarea-char-counter" class="md-textarea" length="120"></textarea>
+                <label for="textarea-char-counter">Speech recognition</label>
+            </div>
+        
+            <br>
+             <div class="text-center">
+                <button class="btn btn-xl btn-primary">Submit</button>
+            </div>
+            <br>
+            <div class="md-form ">
+                <textarea id="textarea-char-counter" class="md-textarea" length="120"></textarea>
+                <label for="textarea-char-counter">Speech translate</label>
+            </div>
+<!--        </center>-->
+        <!--        </div>-->
+    </form>
+</body>
+
+<script type="text/javascript" src="../js/lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/popper.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../ressources/mdbootstrap/js/mdb.min.js"></script>
+
+<!--<script type="text/javascript" src="../cordova.js"></script>-->
+<script type="text/javascript" src="../js/index.js"></script>
+
+
+
 </html>
