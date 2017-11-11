@@ -16,9 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 var app = {
+    
     // Application Constructor
     initialize: function () {
+
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
         /*if (window.cordova) {
         } else {
@@ -31,21 +34,26 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        var options = {
-            frequency: 500
-        }; // Update every 3 seconds
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
         console.log("Device Ready");
 
+
+
         $("#startCapture").on("click", function () {
-            console.log(this);
-            app.onBabbelStart(); //.bind(this)
+
+            //          if ($("#outputLanguageField").val != "KO"){;
+
+            if ($("#outputLanguageField").isChecked()) {
+                console.log("Language de destination selectionnée")
+                app.onBabbelStart(); //.bind(this)
+            } else {
+                alert("Please select output language !");
+            }
         });
     },
 
     onBabbelStart: function () {
-        console.log(this);
         window.plugins.speechRecognition.isRecognitionAvailable(function (available) {
             if (!available) {
                 console.log("Desolé, ce n'est valide");
@@ -78,14 +86,47 @@ var app = {
         console.log("Debut de l' écoute")
         window.plugins.speechRecognition.startListening(function (result) {
             console.log("SpeechReco = " + result);
+            app.showResultInDOM(result);
+            app.translateSpeech(result);
         }, function (err) {
             console.log("Erreur Saisie");
             console.error(err);
         }, {
-            language: "fr-FR"
+            language: "fr-FR",
+            showPopup: true
             //$("#LangSelect").val()
         });
+    },
+
+    showResultInDom: function (result) {
+        $("#recordField").text(result);
+    },
+
+    translateSpeech: function (result) {
+
+        const translate = require('google-translate-api');
+
+        var input = $("#recordField").val();
+        var inputLanguage =
+
+            translate(result, {
+                from: 'fr',
+                to: 'nl'
+            }).then(res => {
+                console.log(res);
+                console.log(res.text);
+                //=> Ik spea Nederlands!
+                console.log(res.from.text.autoCorrected);
+                //=> false
+                console.log(res.from.text.value);
+                //=> I [speak] Dutch!
+                console.log(res.from.text.didYouMean);
+                //=> true
+            }).catch(err => {
+                console.error(err);
+            });
     }
+
 }
 
 function onOffline() {

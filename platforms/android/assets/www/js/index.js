@@ -39,13 +39,11 @@ var app = {
         console.log("Device Ready");
 
         $("#startCapture").on("click", function () {
-            console.log(this);
             app.onBabbelStart(); //.bind(this)
         });
     },
 
     onBabbelStart: function () {
-        console.log(this);
         window.plugins.speechRecognition.isRecognitionAvailable(function (available) {
             if (!available) {
                 console.log("Desolé, ce n'est valide");
@@ -82,7 +80,8 @@ var app = {
             console.log("Erreur Saisie");
             console.error(err);
         }, {
-            language: "fr-FR"
+            language: "fr-FR",
+             showPopup: true
             //$("#LangSelect").val()
         });
     }
