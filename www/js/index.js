@@ -18,7 +18,7 @@
  */
 
 var app = {
-    
+
     // Application Constructor
     initialize: function () {
 
@@ -29,17 +29,13 @@ var app = {
         }*/
     },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
+    //SetUp application
     onDeviceReady: function () {
         document.addEventListener("offline", onOffline, false);
         document.addEventListener("online", onOnline, false);
         console.log("Device Ready");
 
-
-
+        //Input handler
         $("#startCapture").on("click", function () {
 
             //          if ($("#outputLanguageField").val != "KO"){;
@@ -50,9 +46,20 @@ var app = {
             } else {
                 alert("Please select output language !");
             }
+
+
         });
+
+        $("#readOutputField").on("click", function () {
+
+            console.log("Lecture du message traduit")
+            app.readSpeach();
+            //            $("#outputField")
+
+        })
     },
 
+    //Test disponibilité plugin Reconnaissance vocale et autorisation reseau
     onBabbelStart: function () {
         window.plugins.speechRecognition.isRecognitionAvailable(function (available) {
             if (!available) {
@@ -82,49 +89,74 @@ var app = {
         });
     },
 
+    //Saisie du message vocal
     startRecognition: function () {
-        console.log("Debut de l' écoute")
+        console.log("Debut de l' écoute");
         window.plugins.speechRecognition.startListening(function (result) {
             console.log("SpeechReco = " + result);
-            app.showResultInDOM(result);
-            app.translateSpeech(result);
+            $("#inputField").text(result.text);
+            app.translateSpeech(result.text);
         }, function (err) {
+            // Demande de recommencer enregistrement 
             console.log("Erreur Saisie");
             console.error(err);
         }, {
-            language: "fr-FR",
-            showPopup: true
+            language: "fr-FR"
+            //showPopup: true
             //$("#LangSelect").val()
         });
     },
 
-    showResultInDom: function (result) {
-        $("#recordField").text(result);
-    },
-
+    //Traduction du message
     translateSpeech: function (result) {
 
         const translate = require('google-translate-api');
+        //        var input = $("#recordField").val();
+        var outputLanguage = $("#outputLanguageField").val();
 
-        var input = $("#recordField").val();
-        var inputLanguage =
+        const translator = new Translate();
+        translator.translate(result, {
+            from: 'fr',
+            to: outputLanguage
+        }).then(res => {
+            console.log(res);
+            console.log(res.text);
+            //                => Ik spea Nederlands!
+            console.log(res.from.text.autoCorrected);
+            //=> false
+            console.log(res.from.text.value);
+            //=> I [speak] Dutch!
+            $("#outputField").text(res.from.text.value);
 
-            translate(result, {
-                from: 'fr',
-                to: 'nl'
-            }).then(res => {
-                console.log(res);
-                console.log(res.text);
-                //=> Ik spea Nederlands!
-                console.log(res.from.text.autoCorrected);
-                //=> false
-                console.log(res.from.text.value);
-                //=> I [speak] Dutch!
-                console.log(res.from.text.didYouMean);
-                //=> true
-            }).catch(err => {
-                console.error(err);
+            console.log(res.from.text.didYouMean);
+            //=> true
+
+            // Lecture du text 
+            //                app.readSpeach();
+        }).catch(err => {
+            console.error(err);
+        });
+    },
+
+    readSpeach: function () {
+
+        var contentToRead = $("#outputField").val();
+
+        if (contentToRead != null && contentToRead != "") {
+
+            TTS.speak({
+                text: contentToRead,
+                locale: 'fr-FR',
+                rate: 1
+            }, function () {
+                console.log('Text succesfully spoken');
+            }, function (reason) {
+                console.log(reason);
             });
+
+        } else {
+            console.log("");
+        }
     }
 
 }
@@ -136,4 +168,5 @@ function onOffline() {
 function onOnline() {
     window.location.reload();
 }
+
 app.initialize();
