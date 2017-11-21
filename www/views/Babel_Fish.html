@@ -16,7 +16,8 @@
 </head>
 
 <body>
-    <!-- Nav tabs -->
+   <div  id="deviceready" class="blink">
+       <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" role="info">Babel Fish</a>
@@ -47,33 +48,35 @@
             </select>
         </center>
 
-        <br>
+<!--        <br>-->
         <div class="text-center">
             <button type="button " class="btn btn-xl btn-primary" id="startCapture" style="margin-top:2%">
               <i class="fa fa-microphone prefix"></i>speech
             </button>
         </div>
-        <br>
+<!--        <br>-->
 
         <div class="md-form ">
             <textarea id="inputField" class="md-textarea" length="120"></textarea>
             <label for="inputField">Speech recognition</label>
         </div>
 
-        <br>
+<!--        <br>-->
         <div class="text-center">
-            <button class="btn btn-xl btn-primary">Submit</button>
+            <button id="translateButton" class="btn btn-xl btn-primary">Translate</button>
         </div>
-        <br>
+<!--        <br>-->
         <div class="md-form ">
             <textarea id="outputField" class="md-textarea" length="120"></textarea>
             <label for="outputField">Speech translate</label>
         </div>
 
         <div class="text-center">
-            <button id="readOutputField" class="btn btn-xl btn-primary">Play translation</button>
+            <button id="readOutputField"  disabled class="btn btn-xl btn-primary">Play translation</button>
         </div>
     </form>
+    </div>
+
 </body>
 
 <script type="text/javascript" src="../js/lib/jquery-3.2.1.min.js"></script>

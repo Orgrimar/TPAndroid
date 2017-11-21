@@ -18,8 +18,9 @@
     under the License.
 -->
 <html>
-    <head>
-        <!--
+
+<head>
+    <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
@@ -28,25 +29,91 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-    
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div id="app">
-            <a href="views/Niveau_a_bulle.html"><h1>Niveau à bulle</h1></a>    
-            <a href="views/Babel_Fish.html"><h1>Babel Fish</h1></a>
-        </div>
-        <script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="js/lib/popper.min.js"></script>
-        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        
-  
-    </body>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="./ressources/mdbootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./ressources/mdbootstrap/css/mdb.min.css">
+    <link rel="stylesheet" type="text/css" href="./ressources/mdbootstrap/css/style.css">
+
+</head>
+<title>Babel Fish</title>
+</head>
+
+<body>
+    <div id="deviceready" class="blink">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="info">Babel Fish</a>
+            </li>
+        </ul>
+        <form>
+            <br>
+            <center>
+
+                <!--
+            <select id="inputLanguageField" class="custom-select">
+                <option value="" disabled selected>Select your destination language</option>
+               <option value="">Français</option>
+               <option value="">English</option>
+               <option value="">Deutsch</option>
+            </select>
+            -->
+
+                <select id="outputLanguageField" class="custom-select">
+<!--                <option value="KO" disabled selected>Select your destination language</option>-->
+                <option value="fr" >Français</option>
+                <option value="en" selected>English</option>
+                <option value="de">Deutsch</option>
+                <option value="et">Estonian</option>
+                <option value="el">Greek</option>
+                <option value="ro">Romanian</option>
+                <option value="es">Spanish</option>
+            </select>
+            </center>
+
+            <!--        <br>-->
+            <div class="text-center">
+                <button type="button " class="btn btn-xl btn-primary" id="startCapture" style="margin-top:2%">
+              <i class="fa fa-microphone prefix"></i>speech
+            </button>
+            </div>
+            <!--        <br>-->
+
+            <div class="md-form ">
+                <textarea id="inputField" class="md-textarea" length="120"></textarea>
+                <label for="inputField">Speech recognition</label>
+            </div>
+
+            <!--        <br>-->
+            <div class="text-center">
+                <button id="translateButton" class="btn btn-xl btn-primary">Translate</button>
+            </div>
+            <!--        <br>-->
+            <div class="md-form ">
+                <textarea id="outputField" class="md-textarea" length="120"></textarea>
+                <label for="outputField">Speech translate</label>
+            </div>
+
+            <div class="text-center">
+                <button id="readOutputField" disabled class="btn btn-xl btn-primary">Play translation</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+<script type="text/javascript" src="js/lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/lib/popper.min.js"></script>
+<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="./ressources/mdbootstrap/js/mdb.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+
+</body>
+
 </html>
